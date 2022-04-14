@@ -2,7 +2,6 @@ import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appNumberformater]',
-  host:
 })
 export class NumberformaterDirective {
   constructor(private rendrer2: Renderer2, private el: ElementRef) {}
