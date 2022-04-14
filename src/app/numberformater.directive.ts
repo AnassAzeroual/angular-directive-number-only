@@ -13,8 +13,9 @@ export class NumberformaterDirective implements OnInit {
   constructor(private el: ElementRef) {}
 
   ngOnInit(): void {
-    console.log('testttt');
-    this.onBlur();
+    setTimeout(() => {
+      this.onBlur();
+    }, 0);
   }
 
   @HostListener('keydown', ['$event']) // Accept only numbers
@@ -51,12 +52,12 @@ export class NumberformaterDirective implements OnInit {
   @HostListener('blur')
   onBlur() {
     let text = this.el.nativeElement.value; // get the value
+    console.log({ text });
     text = text.replace(/ /g, ''); // remove all white spaces
     let temp = Number(text).toFixed(2); // add dot two digits
     let parts = temp.toString().split('.'); // array of two parts splited with dot
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // add white space to every 3 digits
     text = parts.join('.'); // joint two parts with dot
-    console.log({ text });
     this.el.nativeElement.value = text; // set the new value
   }
 }
