@@ -1,26 +1,47 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 
 @Directive({
   selector: '[appNumberformater]',
 })
-export class NumberformaterDirective {
-  constructor(private rendrer2: Renderer2, private el: ElementRef) {}
+export class NumberformaterDirective implements OnInit {
+  constructor(private el: ElementRef) {}
 
-  @HostListener('keydown', ['$event'])
+  ngOnInit(): void {
+    console.log('testttt');
+    this.onBlur();
+  }
+
+  @HostListener('keydown', ['$event']) // Accept only numbers
   keydown(event) {
+    console.log(event.key);
     let regex: RegExp = new RegExp(/^[0-9]+(\.[0-9]*){0,1}$/g);
-    if (['Backspace', 'Tab', 'End', 'Home'].indexOf(event.key) !== -1) {
+    let allowedList = [
+      'Backspace',
+      'Tab',
+      'End',
+      'Home',
+      'ArrowUp',
+      'ArrowDown',
+      'ArrowRight',
+      'ArrowLeft',
+    ];
+    if (allowedList.indexOf(event.key) !== -1) {
       return;
     }
     let current: string = this.el.nativeElement.value;
     let next: string = current.concat(event.key);
-    console.log(next);
     if (next && !String(next).match(regex)) {
       event.preventDefault();
     }
   }
 
-  @HostListener('focus')
+  @HostListener('focus') // Remove whitespaces from input in focus
   onFocus() {
     let text = this.el.nativeElement.value;
     text = text.replace(/ /g, '');
@@ -35,6 +56,7 @@ export class NumberformaterDirective {
     let parts = temp.toString().split('.'); // array of two parts splited with dot
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // add white space to every 3 digits
     text = parts.join('.'); // joint two parts with dot
+    console.log({ text });
     this.el.nativeElement.value = text; // set the new value
   }
 }
