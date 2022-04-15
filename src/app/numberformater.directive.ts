@@ -17,7 +17,7 @@ export class NumberformaterDirective implements AfterViewInit {
     }, 0);
   }
 
-  @HostListener('keydown', ['$event']) // Accept only numbers
+  @HostListener('keydown', ['$event']) // Accept numbers and minus 
   keydown(event) {
     let regex: RegExp = new RegExp(/^[-+]?[0-9]\d*(\.\d+)?$/g);
     let allowedList = [
