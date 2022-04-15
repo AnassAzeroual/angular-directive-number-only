@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  name = 'Angular';
+  name = 'Formater';
   values = '100099000.25';
 
   submit() {
