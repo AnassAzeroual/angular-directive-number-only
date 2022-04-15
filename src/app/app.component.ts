@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   name = 'Angular';
-  values = '1000000.25';
+  values = '100099000.25';
 
   submit() {
     console.log('the result is ::', this.values);

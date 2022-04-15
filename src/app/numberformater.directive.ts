@@ -3,16 +3,15 @@ import {
   Directive,
   ElementRef,
   HostListener,
-  OnInit,
 } from '@angular/core';
 
 @Directive({
   selector: '[appNumberformater]',
 })
-export class NumberformaterDirective implements OnInit {
+export class NumberformaterDirective implements AfterViewInit {
   constructor(private el: ElementRef) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     setTimeout(() => {
       this.onBlur();
     }, 0);
@@ -20,8 +19,7 @@ export class NumberformaterDirective implements OnInit {
 
   @HostListener('keydown', ['$event']) // Accept only numbers
   keydown(event) {
-    console.log(event.key);
-    let regex: RegExp = new RegExp(/^[0-9]+(\.[0-9]*){0,1}$/g);
+    let regex: RegExp = new RegExp(/^[-+]?[0-9]\d*(\.\d+)?$/g);
     let allowedList = [
       'Backspace',
       'Tab',
@@ -31,13 +29,17 @@ export class NumberformaterDirective implements OnInit {
       'ArrowDown',
       'ArrowRight',
       'ArrowLeft',
+      '-',
     ];
-    if (allowedList.indexOf(event.key) !== -1) {
-      return;
-    }
+
     let current: string = this.el.nativeElement.value;
+    console.log(event.key);
     let next: string = current.concat(event.key);
-    if (next && !String(next).match(regex)) {
+    if (
+      next &&
+      !String(next).match(regex) &&
+      allowedList.indexOf(event.key) == -1
+    ) {
       event.preventDefault();
     }
   }
@@ -52,7 +54,6 @@ export class NumberformaterDirective implements OnInit {
   @HostListener('blur')
   onBlur() {
     let text = this.el.nativeElement.value; // get the value
-    console.log({ text });
     text = text.replace(/ /g, ''); // remove all white spaces
     let temp = Number(text).toFixed(2); // add dot two digits
     let parts = temp.toString().split('.'); // array of two parts splited with dot
