@@ -12,4 +12,13 @@ export class AppComponent {
   submit() {
     console.log('the result is ::', this.values);
   }
+
+  // onKeydown(event: KeyboardEvent) {
+  //   console.log(event);
+  //   event.preventDefault();
+  //   if (event.key == 'z' && event.ctrlKey) {
+  //     console.log('is here');
+  //     // event.target.checked = !event.target.checked;
+  //   }
+  // }
 }
