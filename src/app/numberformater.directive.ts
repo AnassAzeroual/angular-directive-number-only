@@ -13,16 +13,15 @@ export class NumberformaterDirective implements AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      // this.onBlur();
+      this.onBlur();
     }, 0);
   }
 
   @HostListener('keydown', ['$event']) // Accept numbers and minus
   keydown(event) {
-    if (['a','c','v','x'].includes(event.key) && event.ctrlKey) {
+    if (['a', 'c', 'v', 'x'].includes(event.key) && event.ctrlKey) {
       console.log('is enter with ', event.key);
-      
-      return
+      return;
     }
     let regex: RegExp = new RegExp(/^[-+]?[0-9]\d*(\.\d+)?$/g);
     let allowedList = [
@@ -59,7 +58,7 @@ export class NumberformaterDirective implements AfterViewInit {
   // @HostListener('paste', ['$event']) // Remove whitespaces from input in focus
   // onPaste(e: ClipboardEvent) {
   //   console.log({e});
-    
+
   //   // let text = this.el.nativeElement.value;
   //   // text = text.replace(/ /g, '');
   //   // this.el.nativeElement.value = text;
