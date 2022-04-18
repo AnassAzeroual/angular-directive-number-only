@@ -53,6 +53,11 @@ export class NumberformaterDirective implements AfterViewInit {
     this.el.nativeElement.value = text;
   }
 
+  @HostListener('paste', ['$event']) // prevent paste string data
+  onPaste(e) {
+    if (!Number(e.clipboardData.getData('text'))) e.preventDefault();
+  }
+
   @HostListener('blur')
   onBlur() {
     let text = this.el.nativeElement.value; // get the value
